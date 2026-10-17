@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fff9f4">
+<title>飯飯約｜一起吃飯吧！</title>
+<style>
+:root{--pink:#f17899;--ink:#493b50;--muted:#a18d9c;--bg:#fff9f4}
+*{box-sizing:border-box}
+body{margin:0;background:#f7edf2;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;padding:18px}
+.app{background:var(--bg);padding:22px 17px 25px;border-radius:25px;max-width:460px;margin:auto;min-height:95vh}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:23px}
+.brand{font-size:23px;font-weight:900;letter-spacing:-.7px}.brand span{color:var(--pink)}
+.avatar{width:43px;height:43px;border-radius:50%;background:#fce1e8;display:grid;place-items:center;font-size:23px;border:2px solid white}
+.eyebrow{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px}
+h1{font-size:29px;line-height:1.4;margin:7px 0 5px;font-weight:900;letter-spacing:-1px}
+.sub{font-size:13px;color:#988697;margin:0}
+.hero{background:linear-gradient(135deg,#ffe2e9,#f4e7ff);border-radius:23px;padding:19px;margin:19px 0 23px;position:relative;overflow:hidden}
+.hero h2{font-size:19px;margin:0 0 7px;font-weight:900}.hero p{font-size:12px;color:#79677e;margin:0 0 16px}
+.doodle{position:absolute;right:17px;top:18px;font-size:57px;transform:rotate(-9deg)}
+button{font-family:inherit;cursor:pointer;border:0}
+.primary{background:var(--pink);color:white;border-radius:15px;padding:13px 19px;font-size:14px;font-weight:800;box-shadow:0 5px 12px #ed91aa40}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:0 1px 14px}
+.section-head h3{font-size:17px;margin:0;font-weight:900}
+.month-nav{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:800}
+.arrow{background:white;border:1px solid #f0e7ec;border-radius:9px;width:29px;height:29px;color:#8e718b;font-size:18px}
+.week,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;text-align:center}
+.week{font-size:11px;color:#ad9cac;margin-bottom:8px}
+.day{height:43px;border-radius:12px;background:white;color:#67566a;font-size:12px;font-weight:650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid transparent}
+.day.selected{background:var(--pink);color:white;box-shadow:0 4px 9px #f17c9b40}.day.today:not(.selected){border-color:#f4a3b7;color:#e36589}
+.dot{font-size:8px;line-height:6px;height:6px;color:#e98bab}.selected .dot{color:white}
+.hint{margin-top:13px;border-radius:13px;background:#fff0f4;padding:12px;font-size:12px;color:#a56d84;display:flex;gap:8px;align-items:center}
+.hint strong{color:#8c4c69}
+.upcoming{margin-top:25px}.more{color:#df7797;background:none;font-size:12px;font-weight:800}
+.event{display:flex;gap:12px;align-items:center;background:white;padding:13px;border-radius:16px;margin-bottom:10px;border:1px solid #f5edf0}
+.event-icon{width:46px;height:46px;border-radius:13px;background:#fff0e4;display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.event-info{flex:1;min-width:0}.event-info strong{font-size:13px;display:block}.event-info small{font-size:11px;color:#a18e9e;display:block;margin-top:5px}
+.pill{background:#f5eaff;color:#9a79bd;border-radius:9px;padding:6px 8px;font-size:10px;font-weight:800;white-space:nowrap}
+.nav{display:flex;justify-content:space-around;border-top:1px solid #f1e6ed;margin-top:23px;padding-top:15px}
+.nav button{background:none;color:#b3a3b2;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.nav button span{font-size:21px}.nav button.active{color:#ed7797;font-weight:900}
+.toast{background:#5f4a62;color:white;padding:12px 15px;border-radius:13px;font-size:12px;margin-top:12px}
+.overlay{position:fixed;inset:0;background:#37283b80;z-index:10;display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}
+.modal{background:#fffaf7;width:100%;max-width:360px;border-radius:24px;padding:22px;box-shadow:0 15px 50px #30203930;max-height:95vh;overflow:auto}
+.modal h3{font-size:21px;margin:0 0 5px}.modal p{font-size:12px;color:#9d8a99;margin:0 0 18px}
+.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:7px}
+.field input,.field select{width:100%;padding:12px;border:1px solid #eedfe8;border-radius:12px;background:white;color:var(--ink);font:inherit;font-size:13px;outline-color:var(--pink)}
+.modal-actions{display:flex;gap:9px;margin-top:19px}.secondary{background:#f5eaf0;color:#826b80;border-radius:13px;padding:12px;flex:1;font-weight:800}.modal .primary{flex:1}
+@media(max-width:350px){body{padding:7px}.app{padding:16px 11px} .day{height:38px}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top"><div class="brand">🍚 飯飯<span>約</span></div><div class="avatar">🐰</div></header>
+  <div class="eyebrow" id="greeting-date">LET'S EAT TOGETHER ✨</div>
+  <h1>今天要跟誰<br>一起吃飯呢？ <span style="font-size:24px">🍓</span></h1>
+  <p class="sub">把平凡的一餐，變成開心的相聚。</p>
+  <section class="hero"><div class="doodle">🍜</div><h2>好好吃飯計畫 ♡</h2><p>約上朋友，發現生活裡的小確幸！</p><button class="primary" id="start-top">＋ 發起一場聚餐</button></section>
+  <section>
+    <div class="section-head"><h3>📅 聚餐小日曆</h3><div class="month-nav"><button class="arrow" id="prev" aria-label="上個月">‹</button><span id="month-label"></span><button class="arrow" id="next" aria-label="下個月">›</button></div></div>
+    <div class="week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="days" id="calendar"></div>
+    <div class="hint" id="date-hint">💗 <span>點選日期，安排你的下一次美食約會！</span></div>
+  </section>
+  <section class="upcoming"><div class="section-head"><h3>🍰 我的聚餐</h3><button class="more" id="show-all">查看全部 ›</button></div><div id="events"></div></section>
+  <nav class="nav"><button class="active" data-tab="首頁"><span>🏠</span>首頁</button><button data-tab="日曆"><span>🗓️</span>日曆</button><button data-tab="好友"><span>🧸</span>好友</button><button data-tab="我的"><span>🌷</span>我的</button></nav>
+  <div id="modal-root"></div>
+</main>
+<script>
+(function(){
+const $=s=>document.querySelector(s),now=new Date();let year=now.getFullYear(),month=now.getMonth(),selected=now.getDate(),showAll=false,events=[];
+const pad=n=>String(n).padStart(2,'0'),key=(y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
+$('#greeting-date').textContent=`${now.getFullYear()} · ${now.getMonth()+1}月${now.getDate()}日 ✦ LET'S EAT`;
+function renderCalendar(){
+ $('#month-label').textContent=`${year}年 ${month+1}月`;let first=new Date(year,month,1).getDay(),total=new Date(year,month+1,0).getDate(),cal=$('#calendar');cal.innerHTML='';
+ for(let i=0;i<first;i++){let blank=document.createElement('span');blank.style.height='43px';cal.appendChild(blank)}
+ for(let d=1;d<=total;d++){let b=document.createElement('button');b.className='day'+(d===selected?' selected':'')+(year===now.getFullYear()&&month===now.getMonth()&&d===now.getDate()?' today':'');b.innerHTML=`${d}<span class="dot">${events.some(e=>e.date===key(year,month,d))?'●':' '}</span>`;b.setAttribute('aria-label',`${year}年${month+1}月${d}日`);b.onclick=()=>{selected=d;renderCalendar()};cal.appendChild(b)}
+ renderHint();
+}
+function renderHint(){let ev=events.filter(e=>e.date===key(year,month,selected));$('#date-hint').innerHTML=ev.length?`💗 <span><strong>${selected}日有 ${ev.length} 場聚餐！</strong> 點下方查看詳情。</span>`:`💗 <span><strong>${selected}日</strong>，想不想約朋友一起吃點好吃的？</span>`}
+function renderEvents(){let list=(showAll?events:events.slice(0,3)).slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)),el=$('#events');el.innerHTML='';if(!list.length){el.innerHTML='<div style="text-align:center;padding:20px 5px;color:#b3a3b2;font-size:12px">還沒有聚餐計畫，快來揪團吧！ ✨</div>';return}
+ list.forEach(e=>{let d=new Date(e.date+'T12:00:00'),icon=e.kind==='火鍋'?'🍲':e.kind==='甜點'?'🍰':e.kind==='燒肉'?'🥩':'🍜',card=document.createElement('div');card.className='event';card.innerHTML=`<div class="event-icon">${icon}</div><div class="event-info"><strong></strong><small></small></div><span class="pill"></span>`;card.querySelector('strong').textContent=e.title;card.querySelector('small').textContent=`${d.getMonth()+1}/${d.getDate()} · ${e.time} · ${e.place||'地點待定'}`;card.querySelector('.pill').textContent=e.people+' 人揪團';el.appendChild(card)})}
+function openModal(){let r=$('#modal-root');r.innerHTML='';let overlay=document.createElement('div');overlay.className='overlay';overlay.innerHTML=`<div class="modal" role="dialog" aria-modal="true"><h3>揪團吃好料！ 🍓</h3><p>發起一場聚餐，讓快樂加倍。</p><form id="meal-form"><div class="field"><label for="meal-title">聚餐名稱</label><input id="meal-title" required maxlength="35" placeholder="例如：期中考後吃火鍋！"></div><div class="field"><label for="meal-date">聚餐日期</label><input id="meal-date" type="date" required value="${key(year,month,selected)}"></div><div class="field"><label for="meal-time">聚餐時間</label><select id="meal-time"><option>12:00</option><option>12:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option></select></div><div class="field"><label for="meal-kind">想吃什麼？</label><select id="meal-kind"><option>火鍋</option><option>燒肉</option><option>甜點</option><option>其他美食</option></select></div><div class="field"><label for="meal-place">地點（選填）</label><input id="meal-place" maxlength="60" placeholder="例如：學校附近"></div><div class="field"><label for="meal-people">預計人數</label><select id="meal-people"><option value="2">2 人</option><option value="3">3 人</option><option value="4" selected>4 人</option><option value="5">5 人</option><option value="6">6 人</option><option value="8">8 人</option></select></div><div class="modal-actions"><button type="button" class="secondary" id="cancel-meal">取消</button><button type="submit" class="primary">建立聚餐 ♡</button></div></form></div>`;r.appendChild(overlay);overlay.onclick=e=>{if(e.target===overlay)r.innerHTML=''};$('#cancel-meal').onclick=()=>r.innerHTML='';$('#meal-form').onsubmit=e=>{e.preventDefault();let date=$('#meal-date').value;if(!date)return;let [y,m,d]=date.split('-').map(Number);events.push({title:$('#meal-title').value.trim(),date,time:$('#meal-time').value,kind:$('#meal-kind').value,place:$('#meal-place').value.trim(),people:$('#meal-people').value});year=y;month=m-1;selected=d;showAll=true;r.innerHTML='';renderCalendar();renderEvents();let msg=document.createElement('div');msg.className='toast';msg.textContent='🎉 聚餐建立成功！期待一起吃好料！';$('#events').prepend(msg)}}
+$('#start-top').onclick=openModal;$('#prev').onclick=()=>{month--;if(month<0){month=11;year--}selected=1;renderCalendar()};$('#next').onclick=()=>{month++;if(month>11){month=0;year++}selected=1;renderCalendar()};$('#show-all').onclick=()=>{showAll=!showAll;$('#show-all').textContent=showAll?'收起 ↑':'查看全部 ›';renderEvents()};
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.tab==='日曆')$('#month-label').scrollIntoView({behavior:'smooth',block:'center'});else if(b.dataset.tab!=='首頁'){let msg=document.createElement('div');msg.className='toast';msg.id='nav-toast';msg.textContent=b.dataset.tab==='好友'?'🧸 好友功能即將登場！':'🌷 個人頁面即將登場！';$('#nav-toast')?.remove();$('.nav').before(msg)}else $('#nav-toast')?.remove()});
+renderCalendar();renderEvents();
+})();
+</script>
+</body>
+</html>
